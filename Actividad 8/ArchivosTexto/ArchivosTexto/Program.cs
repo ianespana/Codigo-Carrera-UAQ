@@ -122,8 +122,13 @@ namespace ArchivosTexto
             Console.WriteLine(" ID | Apellido Paterno | Apellido Materno | Nombre | Fecha de Nacimiento | Lugar de Nacimiento | Género | Estatus ");
             foreach (Entry entry in entries)
             {
-                Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7}", entry.ID, entry.lastName_A, entry.lastName_B, entry.firstName, entry.birthday.Date, entry.birthPlace, entry.gender, entry.active.ToString());
+                PrintEntry(entry);
             }
+        }
+
+        static void PrintEntry(Entry entry)
+        {
+            Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7}", entry.ID, entry.lastName_A, entry.lastName_B, entry.firstName, entry.birthday.Date, entry.birthPlace, entry.gender, entry.active.ToString());
         }
 
         static string FindVowels(string word)
@@ -206,6 +211,9 @@ namespace ArchivosTexto
                         break;
                     case 3:
                         ModifyEntry(entries);
+                        break;
+                    case 4:
+                        ListEntries(entries);
                         break;
                     default:
                         Console.WriteLine("Opción inválida");
@@ -318,11 +326,31 @@ namespace ArchivosTexto
                     break;
             }
         }
+
         static void ListEntries(List<Entry> entries)
         {
             Console.Clear();
             Console.WriteLine(" Consulta de registros ");
             Console.WriteLine("-----------------------");
+
+            Console.WriteLine("Ingresa el ID del registro a consultar. Si quieres ver todos los registros presiona enter.");
+            string temp = Console.ReadLine();
+
+            if (temp == "")
+            {
+                PrintEntries(entries);
+                return;
+            }
+
+            int id = int.Parse(temp);
+            if (entries.ElementAtOrDefault(id) != null)
+            {
+                PrintEntry(entries[id]);
+            }
+            else
+            {
+                Console.WriteLine("ID inválido");
+            }
         }
     }
 }
