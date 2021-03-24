@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ArchivosTexto
 {
@@ -21,10 +22,50 @@ namespace ArchivosTexto
         public string birthPlace { get; set; }
         public string gender { get; set; }
         public Active active { get; set; }
+        public string curp { get; set; }
     }
 
     class Program
     {
+        private static readonly Dictionary<string, string> StateCodes = new Dictionary<string, string>
+        {
+            { "aguascalientes", "AS" },
+            { "baja california", "BC" },
+            { "baja california Sur", "BS" },
+            { "campeche", "CC" },
+            { "chiapas", "CS" },
+            { "chihuahua", "CH" },
+            { "coahuila", "CL" },
+            { "colima", "CM" },
+            { "cdmx", "DF" },
+            { "ciudad de mexico", "DF" },
+            { "distrito federal", "DF" },
+            { "durango", "DG" },
+            { "guanajuato", "GT" },
+            { "guerrero", "GR" },
+            { "hidalgo", "HG" },
+            { "jalisco", "JC" },
+            { "mexico", "MC" },
+            { "morelos", "MS" },
+            { "michoacan", "MN" },
+            { "nayarit", "NT" },
+            { "nuevo leon", "NL" },
+            { "oaxaca", "OC" },
+            { "puebla", "PL" },
+            { "queretaro", "QT" },
+            { "quintana roo", "QR" },
+            { "san luis potosi", "SP" },
+            { "sinaloa", "SL" },
+            { "sonora", "SR" },
+            { "tabasco", "TC" },
+            { "tamaulipas", "TS" },
+            { "tlaxcala", "TL" },
+            { "veracruz", "VZ" },
+            { "yucatan", "YN" },
+            { "zacatecas", "ZS" },
+            { "extranjero", "NE" }
+        };
+
         static void ParseFile(string file, List<Entry> entries)
         {
             var lines = File.ReadLines(file);
@@ -43,6 +84,8 @@ namespace ArchivosTexto
                     gender = lines.ElementAt(6 + offset),
                     active = activeStatus
                 });
+
+                GenerateCURP(entries[i]);
             }
         }
 
@@ -62,15 +105,78 @@ namespace ArchivosTexto
                     fileStream.Write(entry.active.ToString());
                 }
             }
+
+
+            file = Path.Combine(Environment.CurrentDirectory, "curp.txt");
+            using (StreamWriter fileStream = File.CreateText(file))
+            {
+                foreach (Entry entry in entries)
+                {
+                    fileStream.Write(entry.curp);
+                }
+            }
         }
 
         static void PrintEntries(List<Entry> entries)
         {
-            Console.WriteLine("\tID\t|\tApellido Paterno\t|\tApellido Materno\t|\tNombre\t|\tFecha de Nacimiento\t|\tLugar de Nacimiento\t|\tGénero\t|\tEstatus\t");
+            Console.WriteLine(" ID | Apellido Paterno | Apellido Materno | Nombre | Fecha de Nacimiento | Lugar de Nacimiento | Género | Estatus ");
             foreach (Entry entry in entries)
             {
                 Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7}", entry.ID, entry.lastName_A, entry.lastName_B, entry.firstName, entry.birthday.Date, entry.birthPlace, entry.gender, entry.active.ToString());
             }
+        }
+
+        static string FindVowels(string word)
+        {
+            String vowels = "aeiou";
+            word = new string(word.Where(c => vowels.Contains(c)).ToArray());
+            return word;
+        }
+
+        static string FindConsonants(string word)
+        {
+            String vowels = "aeiou";
+            word = new string(word.Where(c => !vowels.Contains(c)).ToArray());
+            return word;
+        }
+
+        static string RemoveSpecialChars(string word)
+        {
+            word.Normalize(System.Text.NormalizationForm.FormD);
+            string pattern = @"\p{M}";
+            word = Regex.Replace(word, pattern, "�");
+            return word;
+        }
+
+        static void GenerateCURP(Entry entry)
+        {
+            entry.curp += entry.lastName_A[0];
+            entry.curp += FindVowels(entry.lastName_A)[0];
+            entry.curp += entry.lastName_B[0];
+            entry.curp += entry.firstName[0];
+
+            string[] temp = RemoveSpecialChars(entry.firstName).ToLower().Split(" ");
+            if (temp[0] == "jose" || temp[0] == "maria")
+            {
+                if (temp.Count() > 1)
+                {
+                    entry.curp += temp[1][0];
+                }
+                else
+                {
+                    entry.curp += "X";
+                }
+            }
+
+            entry.curp += entry.birthday.Date.ToString("yyMMdd");
+            entry.curp += entry.gender[0];
+            entry.curp += StateCodes[RemoveSpecialChars(entry.birthPlace).ToLower()];
+            entry.curp += FindConsonants(entry.lastName_A).Count().Equals(1) ? FindConsonants(entry.lastName_A)[0] : FindConsonants(entry.lastName_A)[1];
+            entry.curp += FindConsonants(entry.lastName_B).Count().Equals(1) ? FindConsonants(entry.lastName_B)[0] : FindConsonants(entry.lastName_B)[1];
+            entry.curp += FindConsonants(entry.firstName).Count().Equals(1) ? FindConsonants(entry.firstName)[0] : FindConsonants(entry.firstName)[1];
+
+            entry.curp = entry.curp.ToUpper();
+            entry.curp = entry.curp.Replace('Ñ', 'X');
         }
 
         static void Main(string[] args)
@@ -87,6 +193,7 @@ namespace ArchivosTexto
                 Console.WriteLine("1. Altas");
                 Console.WriteLine("2. Bajas");
                 Console.WriteLine("3. Cambios");
+                Console.WriteLine("4. Consulta");
                 var opcion = byte.Parse(Console.ReadLine());
 
                 switch (opcion)
@@ -131,7 +238,7 @@ namespace ArchivosTexto
             Console.WriteLine("Ingresa tu lugar de nacimiento:");
             string birthPlace = Console.ReadLine();
 
-            Console.WriteLine("Ingresa tu genero:");
+            Console.WriteLine("Ingresa tu género (Hombre/Mujer):");
             string gender = Console.ReadLine();
             Active active = Active.Activo;
 
@@ -155,7 +262,7 @@ namespace ArchivosTexto
 
             PrintEntries(entries);
 
-            Console.WriteLine("Ingresa el ID del registro a dar de baja: ");
+            Console.WriteLine("Ingresa el ID del registro a dar de baja:");
             int id = int.Parse(Console.ReadLine());
             entries[id].active = Active.Inactivo;
         }
@@ -168,7 +275,7 @@ namespace ArchivosTexto
 
             PrintEntries(entries);
 
-            Console.WriteLine("Ingresa el ID del registro a modificar: ");
+            Console.WriteLine("Ingresa el ID del registro a modificar:");
             int id = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Selecciona la opción a modificar: ");
@@ -210,6 +317,12 @@ namespace ArchivosTexto
                     Console.WriteLine("Opción inválida");
                     break;
             }
+        }
+        static void ListEntries(List<Entry> entries)
+        {
+            Console.Clear();
+            Console.WriteLine(" Consulta de registros ");
+            Console.WriteLine("-----------------------");
         }
     }
 }
