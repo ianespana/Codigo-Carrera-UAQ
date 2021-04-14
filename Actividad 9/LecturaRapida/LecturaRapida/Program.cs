@@ -31,13 +31,11 @@ namespace LecturaRapida
 
         static void DisplayValues(List<string> entries)
         {
-            var height = Console.WindowHeight / 2;
-            var width = Console.WindowWidth / 2;
-
             foreach (var entry in entries)
             {
-                width -= entry.Count() / 2;
-                height--;
+                var height = (Console.WindowHeight / 2) - 1;
+                var width = (Console.WindowWidth / 2) - (entry.Count() / 2);
+                
                 width = width < 0 ? 0 : width;
                 height = height < 0 ? 0 : height;
 
