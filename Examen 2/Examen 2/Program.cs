@@ -225,7 +225,7 @@ namespace Examen_2
                 PrintEntries(entries);
                 return;
             }
-            else if (temp.ToLower() == "E")
+            else if (temp.ToLower() == "e")
             {
                 PrintActiveEntries(entries);
                 return;
