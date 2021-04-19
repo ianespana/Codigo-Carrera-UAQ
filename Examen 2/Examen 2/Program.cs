@@ -88,6 +88,18 @@ namespace Examen_2
             }
         }
 
+        static void PrintInactiveEntries(List<Entry> entries)
+        {
+            Console.WriteLine(" ID | Nombre | Descripción | Precio | Inventario ");
+            foreach (Entry entry in entries)
+            {
+                if (entry.inventory == 0)
+                {
+                    PrintEntry(entry);
+                }
+            }
+        }
+
         static void PrintEntry(Entry entry)
         {
             Console.WriteLine("{0} | {1} | {2} | {3} | {4}", entry.ID, entry.name, entry.description, entry.price, entry.inventory);
@@ -217,7 +229,7 @@ namespace Examen_2
             Console.WriteLine(" Consulta de registros ");
             Console.WriteLine("-----------------------");
 
-            Console.WriteLine("Ingresa el ID del registro a consultar. Si quieres ver todos los registros presiona enter. Si quieres ver todos los registros con existencias ingresa una 'E'");
+            Console.WriteLine("Ingresa el ID del registro a consultar. Si quieres ver todos los registros presiona enter.\nSi quieres ver todos los registros con existencias ingresa una 'E'.\nSi quieres ver todos los registros sin existencias ingresa una 'S'");
             string temp = Console.ReadLine();
 
             if (temp == "")
@@ -228,6 +240,11 @@ namespace Examen_2
             else if (temp.ToLower() == "e")
             {
                 PrintActiveEntries(entries);
+                return;
+            }
+            else if (temp.ToLower() == "s")
+            {
+                PrintInactiveEntries(entries);
                 return;
             }
 
