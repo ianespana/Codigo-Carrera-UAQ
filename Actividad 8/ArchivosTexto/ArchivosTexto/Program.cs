@@ -68,6 +68,13 @@ namespace ArchivosTexto
 
         static void ParseFile(string file, List<Entry> entries)
         {
+            if (!File.Exists(file))
+            {
+                var fileStream = File.Create(file);
+                fileStream.Close();
+                return;
+            }
+
             var lines = File.ReadLines(file);
             for (int i = 0; i < lines.Count() / 8; i++)
             {
@@ -76,6 +83,7 @@ namespace ArchivosTexto
 
                 entries.Insert(i, new Entry()
                 {
+                    ID = i,
                     lastName_A = lines.ElementAt(1 + offset),
                     lastName_B = lines.ElementAt(2 + offset),
                     firstName = lines.ElementAt(3 + offset),
@@ -84,8 +92,6 @@ namespace ArchivosTexto
                     gender = lines.ElementAt(6 + offset),
                     active = activeStatus
                 });
-
-                GenerateCURP(entries[i]);
             }
         }
 
@@ -102,17 +108,17 @@ namespace ArchivosTexto
                     fileStream.WriteLine(entry.birthday.Date);
                     fileStream.WriteLine(entry.birthPlace.Trim());
                     fileStream.WriteLine(entry.gender.Trim());
-                    fileStream.Write(entry.active.ToString());
+                    fileStream.WriteLine(entry.active.ToString());
                 }
             }
-
 
             file = Path.Combine(Environment.CurrentDirectory, "curp.txt");
             using (StreamWriter fileStream = File.CreateText(file))
             {
                 foreach (Entry entry in entries)
                 {
-                    fileStream.Write(entry.curp);
+                    GenerateCURP(entry);
+                    fileStream.WriteLine(entry.curp);
                 }
             }
         }
