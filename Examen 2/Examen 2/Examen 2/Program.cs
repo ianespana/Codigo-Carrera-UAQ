@@ -30,7 +30,10 @@ namespace Examen_2
             var lines = File.ReadLines(file);
             for (int i = 0; i < lines.Count() / 5; i++)
             {
-                var offset = i * 4;
+                var offset = i * 5;
+
+                int ID;
+                int.TryParse(lines.ElementAt(offset), out ID);
 
                 float price;
                 float.TryParse(lines.ElementAt(3 + offset), out price);
@@ -40,6 +43,7 @@ namespace Examen_2
 
                 entries.Insert(i, new Entry()
                 {
+                    ID = ID,
                     name = lines.ElementAt(1 + offset),
                     description = lines.ElementAt(2 + offset),
                     price = price,
@@ -74,7 +78,7 @@ namespace Examen_2
 
         static void PrintEntry(Entry entry)
         {
-            Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5}", entry.ID, entry.name, entry.description, entry.price, entry.inventory);
+            Console.WriteLine("{0} | {1} | {2} | {3} | {4}", entry.ID, entry.name, entry.description, entry.price, entry.inventory);
         }
 
         static void Main(string[] args)
@@ -134,8 +138,14 @@ namespace Examen_2
             int inventory;
             int.TryParse(Console.ReadLine(), out inventory);
 
+            int ID = 0;
+            if (entries.Count() > 0) {
+                ID = entries.Last().ID + 1;
+            }
+
             entries.Add(new Entry()
             {
+                ID = ID,
                 name = name,
                 description = description,
                 price = price,
