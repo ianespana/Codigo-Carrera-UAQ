@@ -8,9 +8,12 @@ import static java.lang.Float.parseFloat;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Dame la cantidad de pesos mexicanos a convertir:");
-        Float pesos = parseFloat(reader.readLine());
+        System.out.println("Dame el precio por kilometro:");
+        Float ppk = parseFloat(reader.readLine());
 
-        System.out.println("La cantidad en dolares es: " + pesos*0.05);
+        System.out.println("Dame la cantidad de kilometros:");
+        Float kilometers = parseFloat(reader.readLine());
+
+        System.out.println("El costo final es: " + ppk*kilometers);
     }
 }

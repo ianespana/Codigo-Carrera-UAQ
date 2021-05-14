@@ -8,9 +8,11 @@ import static java.lang.Float.parseFloat;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Dame la cantidad de pesos mexicanos a convertir:");
-        Float pesos = parseFloat(reader.readLine());
+        System.out.println("Dame el precio del traje:");
+        Float price = parseFloat(reader.readLine());
 
-        System.out.println("La cantidad en dolares es: " + pesos*0.05);
+        Float disc = price > 2500 ? 0.85f : 0.92f;
+
+        System.out.println("El costo final es " + price*disc);
     }
 }
