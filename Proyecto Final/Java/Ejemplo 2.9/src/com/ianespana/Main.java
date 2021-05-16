@@ -14,6 +14,6 @@ public class Main {
         System.out.println("Dame el numero de horas trabajadas:");
         Float hours = parseFloat(reader.readLine());
 
-        System.out.println("La distancia entre puntos es: " + (salary*hours));
+        System.out.println("El salario semanal es: " + (salary*hours));
     }
 }
