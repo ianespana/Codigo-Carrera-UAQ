@@ -12,7 +12,7 @@ namespace Ejemplo_2._9
             Console.WriteLine("Dame el numero de horas trabajadas:");
             float hours = float.Parse(Console.ReadLine());
 
-            Console.WriteLine("La distancia entre puntos es: " + (salary * hours));
+            Console.WriteLine("El pago final es: " + (salary * hours));
         }
     }
 }
