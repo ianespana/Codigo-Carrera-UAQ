@@ -20,6 +20,6 @@ public class Main {
         System.out.println("Dame el precio del agua por metro cubico:");
         Float ppm2 = parseFloat(reader.readLine());
 
-        System.out.println("La cantidad de pulgadas es: " + (width*height*depth*ppm2));
+        System.out.println("El precio por llenar la alberca es: " + (width*height*depth*ppm2));
     }
 }
