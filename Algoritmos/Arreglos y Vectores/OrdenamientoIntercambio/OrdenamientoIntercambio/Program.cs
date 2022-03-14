@@ -17,7 +17,7 @@ namespace OrdenamientoIntercambio
 
         static void Main(string[] args)
         {
-            int[] nums = new int[] { 8, 4, 6, 2 };
+            int[] nums = new int[] { 5,4,3,2,1 };
             PrintArray(nums);
 
             //Algortimo de ordenacion burbuja
