@@ -29,7 +29,7 @@ namespace Examen_1
                     }
 
                     j++;
-                } while (j < nums.Length - 1 - i);
+                } while (j < nums.Length - 1);
 
                 i++;
             } while (i < nums.Length);
