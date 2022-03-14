@@ -6,15 +6,14 @@ namespace OrdenamientoBurbuja
     {
         static void Main(string[] args)
         {
-            int[] nums = new int[] { 5, 7, 3, 4, 6, 9 };
+            int[] nums = new int[] { 8,3,2,5,6,4 };
             PrintArray(nums);
             //Algortimo de ordenacion  burbuja
             int comp = 0;
             int inter = 0;
-            bool flag;
+
             for (int j = 0; j < nums.Length; j++)
             {
-                flag = true;
                 for (int i = 0; i < nums.Length - 1 - j; i++)
                 {
                     comp++;
@@ -24,11 +23,9 @@ namespace OrdenamientoBurbuja
                         nums[i] = nums[i + 1];
                         nums[i + 1] = aux;
                         inter++;
-                        flag = false;
                         PrintArray(nums);
                     }
                 }
-                if (flag) break;
             }
             PrintArray(nums);
 
