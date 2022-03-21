@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.ianespana</OriginalElement>
+  <nodes>
+    <node x="23.119791666666742" y="0.0">com.ianespana.Usuario</node>
+    <node x="369.5" y="427.0">com.ianespana.Pluma</node>
+    <node x="220.39062500000006" y="702.0">com.ianespana.Estacionamiento</node>
+    <node x="237.32083333333338" y="0.0">com.ianespana.EventoEstacionar</node>
+    <node x="118.99479166666674" y="1053.0">com.ianespana.Main</node>
+    <node x="10.5" y="339.0">com.ianespana.Tarjeta</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.ianespana.EventoEstacionar" target="com.ianespana.Tarjeta" relationship="DEPENDENCY">
+      <point x="0.0" y="138.5" />
+      <point x="340.82083333333344" y="298.0" />
+      <point x="177.9739583333334" y="298.0" />
+      <point x="177.9739583333334" y="318.0" />
+      <point x="264.75" y="318.0" />
+      <point x="84.75" y="-149.5" />
+    </edge>
+    <edge source="com.ianespana.Tarjeta" target="com.ianespana.EventoEstacionar" relationship="DEPENDENCY">
+      <point x="84.75" y="-149.5" />
+      <point x="264.75" y="318.0" />
+      <point x="177.9739583333334" y="318.0" />
+      <point x="177.9739583333334" y="298.0" />
+      <point x="340.82083333333344" y="298.0" />
+      <point x="0.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Main" target="com.ianespana.Tarjeta" relationship="CREATE">
+      <point x="0.0" y="-61.0" />
+      <point x="256.99479166666674" y="1027.0" />
+      <point x="118.5" y="1027.0" />
+      <point x="118.5" y="680.0" />
+      <point x="67.0" y="680.0" />
+      <point x="-113.0" y="149.5" />
+    </edge>
+    <edge source="com.ianespana.Estacionamiento" target="com.ianespana.EventoEstacionar" relationship="CREATE">
+      <point x="95.33333333333337" y="-149.5" />
+      <point x="458.7239583333334" y="680.0" />
+      <point x="580.9947916666667" y="680.0" />
+      <point x="580.9947916666667" y="318.0" />
+      <point x="409.8208333333334" y="318.0" />
+      <point x="69.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Estacionamiento" target="com.ianespana.Tarjeta" relationship="TO_MANY">
+      <point x="-95.33333333333331" y="-149.5" />
+      <point x="268.05729166666674" y="680.0" />
+      <point x="310.72395833333337" y="680.0" />
+      <point x="310.72395833333337" y="670.0" />
+      <point x="180.0" y="670.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="com.ianespana.Tarjeta" target="com.ianespana.EventoEstacionar" relationship="TO_MANY">
+      <point x="-84.75" y="-149.5" />
+      <point x="95.25" y="318.0" />
+      <point x="167.9739583333334" y="318.0" />
+      <point x="167.9739583333334" y="308.0" />
+      <point x="271.8208333333334" y="308.0" />
+      <point x="-69.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Main" target="com.ianespana.Usuario" relationship="CREATE">
+      <point x="0.0" y="-61.0" />
+      <point x="256.99479166666674" y="1027.0" />
+      <point x="0.0" y="1027.0" />
+      <point x="0.0" y="318.0" />
+      <point x="53.11979166666674" y="318.0" />
+      <point x="-60.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Estacionamiento" target="com.ianespana.Pluma" relationship="TO_MANY">
+      <point x="-95.33333333333331" y="-149.5" />
+      <point x="268.05729166666674" y="680.0" />
+      <point x="310.72395833333337" y="680.0" />
+      <point x="310.72395833333337" y="670.0" />
+      <point x="401.5" y="670.0" />
+      <point x="-64.0" y="61.5" />
+    </edge>
+    <edge source="com.ianespana.Tarjeta" target="com.ianespana.Usuario" relationship="DEPENDENCY">
+      <point x="84.75" y="-149.5" />
+      <point x="264.75" y="318.0" />
+      <point x="177.9739583333334" y="318.0" />
+      <point x="177.9739583333334" y="298.0" />
+      <point x="173.11979166666674" y="298.0" />
+      <point x="60.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Estacionamiento" target="com.ianespana.Pluma" relationship="DEPENDENCY">
+      <point x="0.0" y="-149.5" />
+      <point x="363.39062500000006" y="680.0" />
+      <point x="333.74479166666674" y="680.0" />
+      <point x="333.74479166666674" y="660.0" />
+      <point x="465.5" y="660.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="com.ianespana.EventoEstacionar" target="com.ianespana.Tarjeta" relationship="TO_ONE">
+      <point x="-69.0" y="138.5" />
+      <point x="271.8208333333334" y="308.0" />
+      <point x="167.9739583333334" y="308.0" />
+      <point x="167.9739583333334" y="318.0" />
+      <point x="95.25" y="318.0" />
+      <point x="-84.75" y="-149.5" />
+    </edge>
+    <edge source="com.ianespana.Tarjeta" target="com.ianespana.EventoEstacionar" relationship="TO_ONE">
+      <point x="-84.75" y="-149.5" />
+      <point x="95.25" y="318.0" />
+      <point x="167.9739583333334" y="318.0" />
+      <point x="167.9739583333334" y="308.0" />
+      <point x="271.8208333333334" y="308.0" />
+      <point x="-69.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Tarjeta" target="com.ianespana.Usuario" relationship="TO_ONE">
+      <point x="-84.75" y="-149.5" />
+      <point x="95.25" y="318.0" />
+      <point x="167.9739583333334" y="318.0" />
+      <point x="167.9739583333334" y="308.0" />
+      <point x="113.11979166666674" y="308.0" />
+      <point x="0.0" y="138.5" />
+    </edge>
+    <edge source="com.ianespana.Main" target="com.ianespana.Estacionamiento" relationship="CREATE">
+      <point x="0.0" y="-61.0" />
+      <point x="256.99479166666674" y="1027.0" />
+      <point x="363.39062500000006" y="1027.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="com.ianespana.Main" target="com.ianespana.Pluma" relationship="CREATE">
+      <point x="0.0" y="-61.0" />
+      <point x="256.99479166666674" y="1027.0" />
+      <point x="606.3333333333333" y="1027.0" />
+      <point x="606.3333333333333" y="670.0" />
+      <point x="529.5" y="670.0" />
+      <point x="64.0" y="61.5" />
+    </edge>
+    <edge source="com.ianespana.Estacionamiento" target="com.ianespana.Tarjeta" relationship="DEPENDENCY">
+      <point x="0.0" y="-149.5" />
+      <point x="363.39062500000006" y="680.0" />
+      <point x="333.74479166666674" y="680.0" />
+      <point x="333.74479166666674" y="660.0" />
+      <point x="293.0" y="660.0" />
+      <point x="113.0" y="149.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7405857740585774" showDependencies="true" x="440.72598870056515" y="587.5000000000003" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
