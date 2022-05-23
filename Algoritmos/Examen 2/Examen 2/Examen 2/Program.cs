@@ -22,7 +22,7 @@ namespace Examen_2
                 Console.WriteLine("Prueba " + i + ". Numero de elementos: " + searchIn.Length + ". Buscando número: 99");// + (maxValue + 1));
                 var orderedArray = searchIn.OrderBy(x => x);
 
-                Console.WriteLine("\n------ Busqueda Lineal Pivote + 1 -------");
+                Console.WriteLine("\n------ Busqueda Lineal Pivote Central -------");
                 int result = BinarySearch(99, orderedArray.ToArray());
                 switch (result)
                 {
@@ -34,7 +34,7 @@ namespace Examen_2
                         break;
                 }
 
-                Console.WriteLine("\n\n------ Busqueda Lineal Pivote + 1 -------");
+                Console.WriteLine("\n\n------ Busqueda Lineal Pivote Central + 1 -------");
                 result = BinarySearchMod(99, orderedArray.ToArray());
                 switch (result)
                 {
