@@ -1,4 +1,8 @@
+import "dotenv/config";
 import {Comprobante} from "./classes/Comprobante.js";
+import {DatabaseHandler} from "./handlers/DatabaseHandler.js";
+
+let entries = parseInt(process.env.ENTRIES) ? parseInt(process.env.ENTRIES) : 20;
 
 Object.defineProperty(Date.prototype, "YYYYMMDDHHMMSS", {
     value: function () {
@@ -34,11 +38,15 @@ Object.defineProperty(Date.prototype, "YYYYMMDD", {
 });
 
 async function main() {
-    for (let i = 0; i < 1000; i++) {
+    DatabaseHandler.Initialize();
+
+    for (let i = 0; i < entries; i++) {
         let comprobante = new Comprobante();
         await comprobante.Populate();
         await comprobante.SaveToDatabase();
     }
+
+    DatabaseHandler.Terminate();
 
     process.exit(1);
 }
