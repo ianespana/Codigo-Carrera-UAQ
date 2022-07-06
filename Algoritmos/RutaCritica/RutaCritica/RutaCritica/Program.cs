@@ -27,6 +27,7 @@ namespace RutaCritica
             GenerarNodoFinal();
             GenerarRutas();
             CalcularDuracion();
+            Console.ReadLine();
         }
 
         static int GenerarNodo(string nombreNodo, bool inicial = false) {
