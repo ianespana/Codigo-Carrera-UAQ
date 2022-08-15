@@ -1,13 +1,13 @@
 #include <iostream>
 
 int* fillArrayReals() {
-	static int nums[10]{};
+	static int nums[11]{};
 	int offset = 4;
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i <= 10; i++)
 	{
 		nums[i] = i + offset;
-		std::cout << i;
+		std::cout << i + offset;
 		std::cout << "\n";
 	}
 
@@ -15,10 +15,10 @@ int* fillArrayReals() {
 }
 
 int* fillArrayEvens() {
-	static int nums[10]{};
+	static int nums[11]{};
 	int sum = 0;
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i <= 10; i++)
 	{
 		nums[i] = i * 2;
 		sum += i * 2;
@@ -34,5 +34,6 @@ int* fillArrayEvens() {
 
 int main()
 {
-	fillArrayEvens();
+	fillArrayReals();
+	//fillArrayEvens();
 }
