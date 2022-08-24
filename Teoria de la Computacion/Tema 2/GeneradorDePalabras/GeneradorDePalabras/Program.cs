@@ -21,6 +21,9 @@
 
         static void Main(string[] args)
         {
+            alphabet = new();
+            wordSize = 0;
+
             Console.WriteLine("Dame el numero de letras que hay en el alfabeto:");
             int alphabetSize = int.Parse(Console.ReadLine());
 
