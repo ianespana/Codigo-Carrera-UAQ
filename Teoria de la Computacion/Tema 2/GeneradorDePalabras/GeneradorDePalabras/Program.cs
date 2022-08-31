@@ -6,16 +6,15 @@
         static int wordSize = 0;
 
         static void Concat(string oldString) {
-            if (oldString.Length > wordSize)
+            Console.WriteLine(oldString);
+            if (oldString.Length >= wordSize)
             {
                 return;
             }
 
-            string word = oldString;
-            Console.WriteLine(word);
             foreach (string letter in alphabet)
             {
-                Concat(word + letter);
+                Concat(oldString + letter);
             }
         }
 
