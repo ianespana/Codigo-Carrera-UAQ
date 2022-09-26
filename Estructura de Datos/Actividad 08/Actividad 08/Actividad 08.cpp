@@ -5,6 +5,12 @@ struct Nodo {
     Nodo* siguiente;
 };
 
+struct SearchResults {
+    bool found;
+    Nodo* prev;
+    Nodo* node;
+};
+
 Nodo* lista;
 
 void clearConsole() {
@@ -42,26 +48,37 @@ void mostrarLista(Nodo* lista) {
     }
 }
 
-void buscarElemento(Nodo* lista, int n) {
+SearchResults* buscarElemento(Nodo* lista, int n) {
     bool found = false;
 
     Nodo* actual = lista;
+    Nodo* anterior = actual;
 
     while (actual != NULL && actual->dato <= n) {
         if (actual->dato == n) {
             found = true;
+            break;
         }
 
+        anterior = actual;
         actual = actual->siguiente;
     }
 
-    if (found) {
-        std::cout << "Elemento " << n << " SI ha sido encontrado en lista\n";
-    }
-    else
-    {
-        std::cout << "Elemento " << n << " NO ha sido encontrado en lista\n";
-    }
+    SearchResults* res = new SearchResults();
+    res->found = found;
+    res->prev = anterior;
+    res->node = actual;
+
+    return res;
+}
+
+bool eliminarElemento(Nodo* lista, int n) {
+    SearchResults* res = buscarElemento(lista, n);
+    if (!res->found) return false;
+
+    res->prev->siguiente = res->node->siguiente;
+    delete res->node;
+    return true;
 }
 
 int menu() {
@@ -72,6 +89,8 @@ int menu() {
     std::cout << "\t[1] Insertar elemento\n";
     std::cout << "\t[2] Mostrar lista\n";
     std::cout << "\t[3] Buscar elemento\n";
+    std::cout << "\t[4] Eliminar elemento\n";
+    std::cout << "\t[5] Salir\n";
     std::cin >> opcion;
 
     switch (opcion)
@@ -89,9 +108,33 @@ int menu() {
         case 3:
             std::cout << "Dame el elemento a buscar\n";
             std::cin >> element;
-            buscarElemento(lista, element);
+
+            if (buscarElemento(lista, element)->found) {
+                std::cout << "Elemento " << element << " SI ha sido encontrado en lista\n";
+            }
+            else
+            {
+                std::cout << "Elemento " << element << " NO ha sido encontrado en lista\n";
+            }
+
             system("pause");
             break;
+        case 4:
+            std::cout << "Dame el elemento a eliminar\n";
+            std::cin >> element;
+
+            if (eliminarElemento(lista, element)) {
+                std::cout << "Elemento " << element << " ha sido eliminado de la lista\n";
+            }
+            else
+            {
+                std::cout << "Elemento " << element << " NO se ha podido eliminar de la lista\n";
+            }
+
+            system("pause");
+            break;
+        case 5:
+            return 5;
         default:
             return 0;
     }
@@ -104,6 +147,6 @@ int main()
     do
     {
         int opcion = menu();
-        if (opcion == 0) break;
+        if (opcion == 5) break;
     } while (true);
 }
