@@ -55,7 +55,7 @@ int menu() {
     std::cout << "\t[1] Insertar elemento (push)\n";
     std::cout << "\t[2] Eliminar elemento (pop)\n";
     std::cout << "\t[3] Mostrar pila\n";
-    std::cout << "\t[4] Salir\n";
+    std::cout << "\t[5] Salir\n";
     std::cin >> opcion;
 
     switch (opcion)
@@ -77,12 +77,17 @@ int menu() {
         system("pause");
         break;
     case 3:
-        MostrarPila(pila);
+        Cima(pila);
         std::cout << "\n\n";
         system("pause");
         break;
     case 4:
-        return 4;
+        MostrarPila(pila);
+        std::cout << "\n\n";
+        system("pause");
+        break;
+    case 5:
+        return 5;
     default:
         return 0;
     }
@@ -95,6 +100,6 @@ int main()
     do
     {
         int opcion = menu();
-        if (opcion == 4) break;
+        if (opcion == 5) break;
     } while (true);
 }
