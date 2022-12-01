@@ -33,10 +33,20 @@ bool Pop(Nodo*& pila) {
     return true;
 }
 
-void Cima(Nodo*& pila) {
+int Cima(Nodo*& pila) {
     if (pila) {
-        std::cout << pila->dato;
+        return pila->dato;
     }
+    return 0;
+}
+
+int Tamanio(Nodo*& pila) {
+    Nodo* actual = pila;
+    int contador = 0;
+    while (actual != NULL) {
+        contador++;
+    }
+    return contador;
 }
 
 void MostrarPila(Nodo*& pila) {
@@ -55,7 +65,9 @@ int menu() {
     std::cout << "\t[1] Insertar elemento (push)\n";
     std::cout << "\t[2] Eliminar elemento (pop)\n";
     std::cout << "\t[3] Mostrar pila\n";
-    std::cout << "\t[5] Salir\n";
+    std::cout << "\t[4] Mostrar cima\n";
+    std::cout << "\t[5] Mostrar tamanio\n";
+    std::cout << "\t[6] Salir\n";
     std::cin >> opcion;
 
     switch (opcion)
@@ -77,17 +89,20 @@ int menu() {
         system("pause");
         break;
     case 3:
-        Cima(pila);
-        std::cout << "\n\n";
-        system("pause");
-        break;
-    case 4:
         MostrarPila(pila);
         std::cout << "\n\n";
         system("pause");
         break;
+    case 4:
+        std::cout << Cima(pila) << "\n\n";
+        system("pause");
+        break;
     case 5:
-        return 5;
+        std::cout << Tamanio(pila) << "\n\n";
+        system("pause");
+        break;
+    case 6:
+        return 6;
     default:
         return 0;
     }
