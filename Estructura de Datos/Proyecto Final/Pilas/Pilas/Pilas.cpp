@@ -99,7 +99,7 @@ int menu() {
         break;
     case 5:
         std::cout << Tamanio(pila) << "\n\n";
-        system("pause");
+        //system("pause");
         break;
     case 6:
         return 6;
