@@ -1,26 +1,41 @@
 import java.io.*;
 import java.net.Socket;
-import java.util.Arrays;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FTPClient {
+	private static final String HOME = System.getProperty("user.home");
+	private static Path workingDir = Paths.get(HOME);
+	private static Socket socket;
+	private static DataInputStream reader;
+	private static DataOutputStream writer;
+
+	public static DataInputStream GetReader() {
+		return reader;
+	}
+
+	public static DataOutputStream GetWriter() {
+		return writer;
+	}
+
+	public static void Close() throws IOException {
+		socket.close();
+	}
+
 	public static void main(String[] args) {
 		try {
-			Socket socket = new Socket("localhost", 1090);
-			DataOutputStream netOut = new DataOutputStream(socket.getOutputStream());
-			DataInputStream netIn = new DataInputStream(socket.getInputStream());
+			socket = new Socket("localhost", 1090);
+			reader = new DataInputStream(socket.getInputStream());
+			writer = new DataOutputStream(socket.getOutputStream());
 
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-			String resp = "";
+			BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+
 			do {
-				String request = bufferedReader.readLine();
-				netOut.writeUTF(request);
-
-				resp = netIn.readUTF();
-				System.out.println(resp);
-			} while (!resp.equals("CLOSE"));
-
-			socket.close();
-		} catch (Exception e) {
+				String command = console.readLine();
+				CommandHandler handler = new CommandHandler(command);
+				handler.start();
+			} while (true);
+		} catch (Exception ignored) {
 		}
 	}
 }

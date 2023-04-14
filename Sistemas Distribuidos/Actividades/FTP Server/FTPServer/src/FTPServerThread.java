@@ -1,7 +1,10 @@
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FTPServerThread extends Thread {
     private static final String HOME = System.getProperty("user.home");
@@ -18,8 +21,8 @@ public class FTPServerThread extends Thread {
 
     public void run() {
         try {
-            InputStream input = socket.getInputStream();
-            DataInputStream reader = new DataInputStream(input);
+            System.out.println("New connection from " + socket.getInetAddress());
+            reader = new DataInputStream(socket.getInputStream());
             writer = new DataOutputStream(socket.getOutputStream());
 
             String clientMessage;
@@ -62,6 +65,7 @@ public class FTPServerThread extends Thread {
     }
 
     private String closeRequest(String[] tokens) throws Exception {
+        System.out.println("Closed connection from " + socket.getInetAddress());
         return "CLOSE";
     }
 
@@ -78,13 +82,28 @@ public class FTPServerThread extends Thread {
     }
 
     private String cdRequest(String[] tokens) throws Exception {
-        System.out.println(workingDir.toString());
         workingDir = workingDir.resolve(tokens[1]).normalize();
         return workingDir.toString();
     }
 
     private String lsRequest(String[] tokens) throws Exception {
-        return "";
+        try {
+            Stream<Path> stream = Files.list(workingDir);
+            String tree = stream
+                    .filter(Files::isDirectory)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.joining("\n", "", ""));
+            stream = Files.list(workingDir);
+            tree += "\n" + stream
+                    .filter(Files::isRegularFile)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.joining("\n", "", ""));
+            return tree;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String deleteRequest(String[] tokens) throws Exception {
@@ -104,6 +123,6 @@ public class FTPServerThread extends Thread {
     }
 
     private String pwdRequest(String[] tokens) throws Exception {
-        return "";
+        return workingDir.toString();
     }
 }
