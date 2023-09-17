@@ -1,14 +1,17 @@
 {
   "name": "taller-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "Código taller NodeJS",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
+    "start-debug": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ian R.",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
   }
 }
